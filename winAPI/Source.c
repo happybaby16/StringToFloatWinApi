@@ -19,10 +19,10 @@ struct Answer
 
 struct DataQuadraticSTR
 {
-	LPCSTR a;
-	LPCSTR b;
-	LPCSTR c;
-	LPCSTR res;
+	LPWSTR a;
+	LPWSTR b;
+	LPWSTR c;
+	LPWSTR res;
 };
 
 struct DataQuadraticFLOAT
@@ -325,18 +325,20 @@ void writeFile(struct Answer ans)
 
 
 
-FLOAT stringToFloat(LPSTR number)
+FLOAT stringToFloat(LPWSTR number)
 {
 	DWORD lenght = strlen(number);
 
 	LPSTR str1 = malloc(lenght + 1);
+	str1 = number;
+	LPSTR str2 = str1;
 	BOOL minus = FALSE;
-	if (number[0] == '-')
+	if (str1[0] == '-')
 	{
-		number[0] = '0';
+		str2[0] = '0';
 		minus = TRUE;
 	}
-	str1 = number;
+	
 	FLOAT before_point = 0.0f;
 	FLOAT after_point = 0.0f;
 
@@ -367,7 +369,7 @@ FLOAT stringToFloat(LPSTR number)
 	{
 		BFP_leght += 2;
 		DWORD power = BFP_leght-1;
-		str1 = number;
+		str1 = str2;
 		for (DWORD i = 0; i < BFP_leght; (str1)++)
 		{
 			CHAR s1 = *str1;
@@ -384,7 +386,7 @@ FLOAT stringToFloat(LPSTR number)
 		return before_point;
 	}
 
-	str1 = number;
+	str1 = str2;
 	for (DWORD i = 0; i < lenght; (str1)++)
 	{
 		CHAR s1 = *str1;
